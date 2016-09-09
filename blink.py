@@ -9,9 +9,9 @@ GPIO.setup(11, GPIO.OUT)
 
 
 while True:
-        GPIO.output(pin,GPIO.HIGH)
+        GPIO.output(11,GPIO.HIGH)
         time.sleep(1)
-        GPIO.output(pin,GPIO.LOW)
+        GPIO.output(11,GPIO.LOW)
         time.sleep(1)
         
 
