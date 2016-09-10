@@ -5,9 +5,7 @@ app = Flask(__name__)
 def hello():
     return "<h1>Hello World! </h1> <br> <h2>This is Raspberry Pi Workshop</h2>"
 
-@app.route("/test")
-def test():
-    return render_template('main.html')
+
     
 
 if __name__ == "__main__":
