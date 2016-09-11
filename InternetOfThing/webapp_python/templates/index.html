@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+        <!-- Place favicon.ico in the root directory -->
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <div class="jumbotron">
+      <div class="container">
+
+        <h1>Hello World !</h1>
+        <br>
+        <h2> Raspberry Pi Workshop </h2>
+      </div>
+  </div>
+
+        <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-4">
+        <h3>Switch:<span id = 'switch_id'> </span></h3>
+        <p>
+          </div>
+<div class="col-md-4">
+
+          <button type='button' id='led_on'>LED ON</button>
+          <button type='button' id='led_off'>LED OFF</button>
+        </p>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <footer>
+        <p>&copy; 2016 Zovio, Inc.</p>
+      </footer>
+    </div> <!-- /container -->
+
+
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        <script>
+          $(document).ready(function() {
+            $('#led_on').click(function() {
+              console.log('on');
+              $.post('/led/1');
+            });
+            $('#led_off').click(function() {
+            console.log('off');
+            $.post('/led/0');
+            });
+          });
+
+
+
+          function updateSwitch(switchState) {
+                       if (switchState === '0') {
+                         $('#switch_id').text('Off');
+                        // $('#switch_id').toggleClass('label-danger', false);
+                        // $('#switch_id').toggleClass('label-default', true);
+                       }
+                       else if (switchState === '1') {
+                         $('#switch_id').text('On');
+                        // $('#switch_id').toggleClass('label-danger', true);
+                        // $('#switch_id').toggleClass('label-default', false);
+                       }
+                     }
+
+
+
+
+          var switchEvent = new EventSource("{{url_for('switch')}}");
+          switchEvent.onmessage=function(e){
+            //$('#switch_id').text(e.data);
+            updateSwitch(e.data);
+          }
+          updateSwitch('{{ switch }}');
+
+        </script>
+    </body>
+</html>
